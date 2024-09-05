@@ -1,0 +1,7 @@
+*.pdb
+*.jpg
+.vs/*
+bin/Debug/*
+obj/Debug/*
+obj/*
+bin/*
