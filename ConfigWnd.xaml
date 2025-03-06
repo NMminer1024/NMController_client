@@ -1,0 +1,140 @@
+﻿<Window x:Class="NMController.ConfigWnd"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NMController"
+        mc:Ignorable="d"
+        Title="NMMiner Config" Height="720" Width="410" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <StackPanel Margin="5">
+            <StackPanel Margin="0,0,0,5">
+                <TextBlock Text="Device Information." FontWeight="Bold" FontSize="14"/>
+                <StackPanel Orientation="Horizontal" Margin="0,10,0,5">
+                    <TextBlock Text="Device IP:" Margin="0,0,10,0" Width="120"/>
+                    <TextBox x:Name="deviceIpTB" Width="250" IsReadOnly="True"/>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Margin="0,0,0,5">
+                <TextBlock Text="Device Wifi Configuration." FontWeight="Bold" FontSize="14"/>
+                <StackPanel Orientation="Horizontal" Margin="0,10,0,5">
+                    <TextBlock Text="SSID:" Margin="0,0,10,0" Width="120"/>
+                    <TextBox x:Name="WifiSsidTB" Width="250"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                    <TextBlock Text="Password:" Margin="0,0,10,0" Width="120"/>
+                    <TextBox x:Name="wifiPasswordTB" Width="250"/>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Margin="0,0,0,5">
+                <TextBlock Text="Primary pool, this pool is used on nmminer bootup." FontWeight="Bold" FontSize="14"/>
+                <StackPanel Orientation="Horizontal" Margin="0,10,0,5">
+                    <TextBlock Text="Primary Pool URL:" Margin="0,0,10,0" Width="120"/>
+                    <TextBox x:Name="PrimaryPoolTB" Width="250"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                    <TextBlock Text="Pool password:" Margin="0,0,10,0" Width="120"/>
+                    <TextBox x:Name="PrimaryPoolPasswordTB" Width="250"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                    <TextBlock Text="BTC address:" Margin="0,0,10,0" Width="120"/>
+                    <TextBox x:Name="PrimaryAddrTB" Width="250"/>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Margin="0,0,0,5">
+                <TextBlock Text="Secondary pool, which used when primary pool fails." FontSize="14" FontWeight="Bold"/>
+                <StackPanel Orientation="Horizontal" Margin="0,10,0,5">
+                    <TextBlock Text="Secondary Pool URL:" Margin="0,0,10,0" Width="120"/>
+                    <TextBox x:Name="SecondaryPoolTB" Width="250"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                    <TextBlock Text="Pool password:" Margin="0,0,10,0" Width="120"/>
+                    <TextBox x:Name="SecondaryPoolPasswordTB" Width="250"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                    <TextBlock Text="BTC address:" Margin="0,0,10,0" Width="120"/>
+                    <TextBox x:Name="SecondaryAddrTB" Width="250"/>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Margin="0,0,0,5">
+                <TextBlock Text="Common Configurations:" FontSize="14" FontWeight="Bold"/>
+                <StackPanel Orientation="Horizontal" Margin="0,10,0,5">
+                    <TextBlock Text="Timezone (UTC -12/+12):" Margin="0,0,10,0" Width="150"/>
+                    <TextBox x:Name="TimeZoneTB" Width="220" PreviewTextInput="TimezoneTextBox_PreviewTextInput" DataObject.Pasting="TextBox_Pasting"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                    <TextBlock Text="UI refresh interval (s):" Margin="0,0,10,0" Width="150"/>
+                    <TextBox x:Name="RefreshIntervalTB" Width="220" PreviewTextInput="TextBox_PreviewTextInput" DataObject.Pasting="TextBox_Pasting"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                    <TextBlock Text="Screen sleep timeout(s):" Margin="0,0,10,0" Width="150"/>
+                    <TextBox x:Name="ScreenTimeOutTB" Width="220" PreviewTextInput="TextBox_PreviewTextInput" DataObject.Pasting="TextBox_Pasting"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                    <TextBlock Text="Screen brightness(0-100)" Margin="0,0,10,0" Width="150"/>
+                    <TextBox x:Name="BrightnessTB" Width="220" PreviewTextInput="TextBox_PreviewTextInput" DataObject.Pasting="TextBox_Pasting"/>
+                </StackPanel>
+
+                <!-- <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                    <TextBlock Text="Device code:" Width="80"/>
+                    <TextBox x:Name="DeviceCodeTB" Width="300" IsReadOnly="True"/>
+                </StackPanel> -->
+
+                <!-- <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                    <TextBlock Text="Licence:" Width="80"/>
+                    <TextBox x:Name="LicenceTB" Width="300"/>
+                </StackPanel> -->
+
+                <CheckBox x:Name="SaveUptimeCB" Margin="0,5,0,5" Content="Save uptime, best diff, shares in nvs." IsChecked="True"/>
+                <CheckBox x:Name="LedEnableCB" Margin="0,5,0,5" Content="Led enable." IsChecked="True"/>
+                <CheckBox x:Name="RotateScreenCB" Margin="0,5,0,5" Content="Rotate screen."/>
+                <CheckBox x:Name="PriceUpdateCB" Margin="0,5,0,5" Content="BTC price update from market." IsChecked="False"/>
+                <CheckBox x:Name="AutoBrightnessCB" Margin="0,5,0,5" Content="Enable/disable auto brightness." IsChecked="True"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                <Button x:Name="saveBtn" Content="Config NMDevice" Click="saveBtn_Click"  Margin="0,0,0,0" Width="380">
+                    <Button.Triggers>
+                        <EventTrigger RoutedEvent="Button.Click">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation To="0.9" Duration="0:0:0.1" Storyboard.TargetProperty="RenderTransform.ScaleX"/>
+                                    <DoubleAnimation To="0.9" Duration="0:0:0.1" Storyboard.TargetProperty="RenderTransform.ScaleY"/>
+                                    <DoubleAnimation To="1.0" Duration="0:0:0.1" BeginTime="0:0:0.1" Storyboard.TargetProperty="RenderTransform.ScaleX"/>
+                                    <DoubleAnimation To="1.0" Duration="0:0:0.1" BeginTime="0:0:0.1" Storyboard.TargetProperty="RenderTransform.ScaleY"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Button.Triggers>
+                    <Button.RenderTransform>
+                        <ScaleTransform/>
+                    </Button.RenderTransform>
+                </Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                <Button x:Name="saveToAllBtn" Content="Config To All NMDevice" Click="saveAllBtn_Click"  Margin="0,0,0,0" Width="380">
+                    <Button.Triggers>
+                        <EventTrigger RoutedEvent="Button.Click">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation To="0.9" Duration="0:0:0.1" Storyboard.TargetProperty="RenderTransform.ScaleX"/>
+                                    <DoubleAnimation To="0.9" Duration="0:0:0.1" Storyboard.TargetProperty="RenderTransform.ScaleY"/>
+                                    <DoubleAnimation To="1.0" Duration="0:0:0.1" BeginTime="0:0:0.1" Storyboard.TargetProperty="RenderTransform.ScaleX"/>
+                                    <DoubleAnimation To="1.0" Duration="0:0:0.1" BeginTime="0:0:0.1" Storyboard.TargetProperty="RenderTransform.ScaleY"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Button.Triggers>
+                    <Button.RenderTransform>
+                        <ScaleTransform/>
+                    </Button.RenderTransform>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -5,16 +5,46 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
-    <ApplicationIcon>logo.ico</ApplicationIcon>
+    <ApplicationIcon>nm.ico</ApplicationIcon>
     <Platforms>AnyCPU;x64;x86</Platforms>
+    <PackageIcon>nm.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="logo.ico" />
+    <None Remove="images\download.png" />
+    <None Remove="images\email.png" />
+    <None Remove="images\fb.png" />
+    <None Remove="images\github.png" />
+    <None Remove="images\mail.png" />
+    <None Remove="images\reddit.png" />
+    <None Remove="images\telegram.png" />
+    <None Remove="images\youtube.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="images\download.png" />
+    <Resource Include="images\email.png" />
+    <Resource Include="nm.ico" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="nm.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="images\fb.png" />
+    <Resource Include="images\github.png" />
+    <Resource Include="images\mail.png" />
+    <Resource Include="images\reddit.png" />
+    <Resource Include="images\telegram.png" />
+    <Resource Include="images\youtube.png" />
   </ItemGroup>
 
 </Project>

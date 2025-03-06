@@ -37,7 +37,7 @@ namespace NMController
         }
 
         private String _netDiff;
-        public  String NetDiff
+        public String NetDiff
         {
             get { return _netDiff; }
             set
@@ -179,6 +179,29 @@ namespace NMController
                 OnPropertyChanged("UpdateTime");
             }
         }
+
+        private String? _poolInUse;
+        public String? PoolInUse
+        {
+            get { return _poolInUse; }
+            set
+            {
+                _poolInUse = value;
+                OnPropertyChanged("PoolInUse");
+            }
+        }
+
+        private bool _offline;
+        public bool Offline
+        {
+            get { return _offline; }
+            set
+            {
+                _offline = value;
+                OnPropertyChanged("Offline");
+            }
+        }
+
 
         public override bool Equals(object obj)
         {
