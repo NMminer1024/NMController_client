@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NMController"
         mc:Ignorable="d"
-        Title="NMController v0.4" Height="600" Width="1560" WindowStartupLocation="CenterScreen" ResizeMode="CanResize">
+        Title="NMController v0.4.1" Height="600" Width="1560" WindowStartupLocation="CenterScreen" ResizeMode="CanResize">
     <Window.Resources>
         <local:TempColorConverter x:Key="TmepColorConverter"/>
         <local:RSSIColorConverter x:Key="RssiColorConverter"/>

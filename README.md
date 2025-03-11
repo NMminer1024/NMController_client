@@ -84,15 +84,27 @@ With the UDP broadcast data on port 12347.
 ```
 If the IP is "0.0.0.0", it means all the device should change to the parameters; if not the broadcast IP("0.0.0.0"), only the device corresponding to the IP address will update information.
 
+#### 2.4.1 Backup Config
+Save the configuration of the device to the "config.json" as default. You can rename the config.json to whatever you like, to save as for different Crypto, different Pool, etc.
+
+*Notice: if your NMController installed at the "C:/", which maybe need administrator privileges to backup config file.*
+
+#### 2.4.2 Load Config
+The Load Config, you can choose the "config.json" you saved, if success, will loading to the ConfigWnd, you can config to a NM device, or Config to all NMDevices.
 
 ## Release log
 
-### (2025.3.5-v0.0.4)
+### (2025.3.11-v0.4.1)
+- **Features**:
+  - Add Configuration backup and load function;
+  - fix the issue: when low screen resolution, the config window cannot be fully displayed.
+
+### (2025.3.5-v0.4.0)
 - **Features**:
   - Add the config Function, can use the NMController to config a NMMiner or all the NM Series devices( NMMiner and NMAxe/NMAxe-Gamma );
   - Add the contact links: Telegram, youtube, facebook, reddit, github and email.
 
-### (2025.3.3-v0.0.3)
+### (2025.3.3-v0.3.0)
 
 - **Features**:
   - Update the UI, Temp and RSSI will prompts based on different stats;

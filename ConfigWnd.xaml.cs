@@ -19,6 +19,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml;
 
 namespace NMController
 {
@@ -31,7 +32,21 @@ namespace NMController
         public ConfigWnd(NMParam param)
         {
             InitializeComponent();
+            if (this.Height > SystemParameters.WorkArea.Height)
+            {
+                this.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            }
             UpdateWndParam(param);
+            this.Loaded += ConfigWnd_Loaded;
+        }
+
+        private void ConfigWnd_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.MaxHeight = SystemParameters.WorkArea.Height;
+            if (this.Height > SystemParameters.WorkArea.Height)
+            {
+                this.Height = SystemParameters.WorkArea.Height;
+            }
         }
 
         private void UpdateWndParam(NMParam param)
@@ -105,8 +120,10 @@ namespace NMController
             return new IPAddress(broadcastAddressBytes);
         }
 
-        private async Task configNMParam(NMParam param)
+        private NMParam GetNMParam(string ip)
         {
+            NMParam param = new NMParam();
+            param.IP = ip;
             param.WiFiSSID = WifiSsidTB.Text;
             param.WiFiPWD = wifiPasswordTB.Text;
             param.PrimaryPool = PrimaryPoolTB.Text;
@@ -124,7 +141,7 @@ namespace NMController
             if (param.WiFiSSID == "" || param.WiFiPWD == "")
             {
                 MessageBox.Show("WiFi Parameter (SSID or PWD) can't be empty.");
-                return;
+                return null;
             }
 
             if (int.TryParse(TimeZoneTB.Text, out int timezone))
@@ -137,14 +154,14 @@ namespace NMController
                 {
                     TimeZoneTB.Text = "8";
                     MessageBox.Show("TimeZone valid: [-12, 12].");
-                    return;
+                    return null;
                 }
             }
             else
             {
                 TimeZoneTB.Text = "8";
                 MessageBox.Show("TimeZone input invalid!");
-                return;
+                return null;
             }
 
             if (int.TryParse(RefreshIntervalTB.Text, out int refresh))
@@ -155,7 +172,7 @@ namespace NMController
             {
                 RefreshIntervalTB.Text = "2";
                 MessageBox.Show("RefreshInterval input invalid!");
-                return;
+                return null;
             }
 
             if (int.TryParse(ScreenTimeOutTB.Text, out int timeout))
@@ -166,7 +183,7 @@ namespace NMController
             {
                 ScreenTimeOutTB.Text = "60";
                 MessageBox.Show("ScreenTimeOut input invalid!");
-                return;
+                return null;
             }
 
             if (int.TryParse(BrightnessTB.Text, out int brightness))
@@ -179,13 +196,23 @@ namespace NMController
                 {
                     BrightnessTB.Text = "100";
                     MessageBox.Show("Brightness valid: [0-100].");
-                    return;
+                    return null;
                 }
             }
             else
             {
                 BrightnessTB.Text = "100";
                 MessageBox.Show("Brightness input invalid!");
+                return null;
+            }
+            return param;
+        }
+
+        private async Task configNMParam(string ipAddr)
+        {
+            NMParam param = GetNMParam(ipAddr);
+            if (param == null)
+            {
                 return;
             }
 
@@ -212,27 +239,25 @@ namespace NMController
 
             if (param.IP == "0.0.0.0")
             {
-                MessageBox.Show("Parameters Send to ALL!");
+                MessageBox.Show("Parameters Send to ALL!", "Success");
             }
             else
             {
-                MessageBox.Show("Parameters Send to " + param.IP + "!");
+                MessageBox.Show("Parameters Send to " + param.IP + "!", "Success");
             }
         }
 
         private async void saveBtn_Click(object sender, RoutedEventArgs e)
         {
-            NMParam param = new NMParam();
-            param.IP = deviceIpTB.Text;
-            await configNMParam(param);
+            string ip = deviceIpTB.Text;
+            await configNMParam(ip);
             this.Close();
         }
 
         private async void saveAllBtn_Click(object sender, RoutedEventArgs e)
         {
-            NMParam param = new NMParam();
-            param.IP = "0.0.0.0";
-            await configNMParam(param);
+            string ip = "0.0.0.0";
+            await configNMParam(ip);
             this.Close();
         }
 
@@ -255,6 +280,57 @@ namespace NMController
                 {
                     e.CancelCommand();
                     break;
+                }
+            }
+        }
+
+        private void loadConfigBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var openFileDialog = new Microsoft.Win32.OpenFileDialog
+            {
+                FileName = "config.json",
+                DefaultExt = ".json",
+                Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*"
+            };
+
+            bool? result = openFileDialog.ShowDialog();
+            if (result == true)
+            {
+                string filePath = openFileDialog.FileName;
+                try
+                {
+                    string json = File.ReadAllText(filePath);
+                    string ip = deviceIpTB.Text;
+                    NMParam param = JsonConvert.DeserializeObject<NMParam>(json);
+                    param.IP = ip;
+                    UpdateWndParam(param);
+                    MessageBox.Show("Load Configuration successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("config.json not found! Backup first!", "Error");
+            }
+        }
+
+        private void saveConfigBtn_Click(object sender, RoutedEventArgs e)
+        {
+            NMParam param = GetNMParam(deviceIpTB.Text);
+            if (param != null)
+            {
+                string json = JsonConvert.SerializeObject(param, Newtonsoft.Json.Formatting.Indented);
+                try
+                {
+                    File.WriteAllText("config.json", json);
+                    MessageBox.Show("Backup to config.json successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }

@@ -8,6 +8,7 @@
     <ApplicationIcon>nm.ico</ApplicationIcon>
     <Platforms>AnyCPU;x64;x86</Platforms>
     <PackageIcon>nm.png</PackageIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <ItemGroup>
